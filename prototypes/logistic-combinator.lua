@@ -2,7 +2,7 @@ data:extend( {
   {
     type = "item",
     name = "logistic-combinator",
-    icon = "__gophers-test__/graphics/logistic-combinator.png",
+    icon = "__logistic-combinators__/graphics/logistic-combinator.png",
     flags = {"goes-to-quickbar"},
     subgroup = "circuit-network",
     place_result="logistic-combinator",
@@ -24,7 +24,7 @@ data:extend( {
   {
     type = "constant-combinator",
     name = "logistic-combinator",
-    icon = "__gophers-test__/graphics/logistic-combinator.png",
+    icon = "__logistic-combinators__/graphics/logistic-combinator.png",
     flags = {"placeable-neutral", "player-creation"},
     minable = {hardness = 0.2, mining_time = 0.5, result = "logistic-combinator"},
     max_health = 50,
@@ -37,7 +37,7 @@ data:extend( {
 
     sprite =
     {
-      filename = "__gophers-test__/graphics/logistic-combinator.png",
+      filename = "__logistic-combinators__/graphics/logistic-combinator.png",
       width = 45,
       height = 40,
       shift = {0.15, 0},
@@ -61,7 +61,7 @@ data:extend( {
    {
      type = "inserter",
      name = "lcomb-hidden-inserter",
-     icon = "__gophers-test__/graphics/nil.png",
+     icon = "__logistic-combinators__/graphics/nil.png",
      flags = {"placeable-neutral", "player-creation","not-on-map"},
      minable = {hardness = 0.2, mining_time = 0.5, result = "logistic-combinator"},
      max_health = 40,
@@ -82,9 +82,11 @@ data:extend( {
      energy_per_rotation = 7000,
      energy_source =
      {
-       type = "electric",
+       type = "burner",
        usage_priority = "secondary-input",
-       drain = "0.0kW"
+       drain = "0.0kW",
+       effectivity=1,
+       fuel_inventory_size=1,
      },
      extension_speed = 0.07,
      rotation_speed = 0.04,
@@ -92,42 +94,42 @@ data:extend( {
      filter_count = 5,
      hand_base_picture =
      {
-       filename = "__gophers-test__/graphics/nil.png",
+       filename = "__logistic-combinators__/graphics/nil.png",
        priority = "extra-high",
        width = 1,
        height = 1
      },
      hand_closed_picture =
      {
-       filename = "__gophers-test__/graphics/nil.png",
+       filename = "__logistic-combinators__/graphics/nil.png",
        priority = "extra-high",
        width = 1,
        height = 1
      },
      hand_open_picture =
      {
-       filename = "__gophers-test__/graphics/nil.png",
+       filename = "__logistic-combinators__/graphics/nil.png",
        priority = "extra-high",
        width = 1,
        height = 1
      },
      hand_base_shadow =
      {
-       filename = "__gophers-test__/graphics/nil.png",
+       filename = "__logistic-combinators__/graphics/nil.png",
        priority = "extra-high",
        width = 1,
        height = 1
      },
      hand_closed_shadow =
      {
-       filename = "__gophers-test__/graphics/nil.png",
+       filename = "__logistic-combinators__/graphics/nil.png",
        priority = "extra-high",
        width = 1,
        height = 1
      },
      hand_open_shadow =
      {
-       filename = "__gophers-test__/graphics/nil.png",
+       filename = "__logistic-combinators__/graphics/nil.png",
        priority = "extra-high",
        width = 1,
        height = 1
@@ -136,7 +138,7 @@ data:extend( {
      {
        sheet=
        {
-         filename="__gophers-test__/graphics/nil.png",
+         filename="__logistic-combinators__/graphics/nil.png",
          priority = "extra-high",
          width = 1,
          height = 1
