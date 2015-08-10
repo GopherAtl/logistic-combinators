@@ -1,0 +1,10 @@
+{
+  "name": "logistic-combinators",
+  "version": "0.1.0",
+  "title": "Logistic Combinators",
+  "author": "GopherAtl",
+  "homepage": "",
+  "contact": "gopheratl@gmail.com",
+  "description": "Adds special combinator that transfers values from logistic network to circuit networks.",
+  "dependencies": ["base >= 0.12.0"]
+}
