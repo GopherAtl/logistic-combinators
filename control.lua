@@ -84,6 +84,8 @@ local function onTick(event)
             if c~=params[i].count then
               params[i].count=c
             end
+          elseif params[i].count~=0 then
+            params[i].count=0
           end
         end
         lc.comb.set_circuit_condition(1,{parameters=params})
