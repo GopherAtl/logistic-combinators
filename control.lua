@@ -78,7 +78,7 @@ local function onTick(event)
       if lc.comb.valid and lc.inserter.valid then
         local params=lc.comb.get_circuit_condition(1).parameters
         for i=1,15 do
-          if params[i].signal.name then
+          if params[i].signal.name and params[i].signal.type=="item" then
             --it's set to something, so deduce it
             local c=deduceSignalValue(lc.inserter,params[i].signal,2)
             if c~=params[i].count then
