@@ -77,7 +77,7 @@ end
 local function onPlaceEntity(event)
   local entity=event.created_entity
   if entity.name=="logistic-combinator" then
-    lcombs[#lcombs+1]={comb=entity}
+    table.insert(lcombs,{comb=entity})
   end
 end
 
