@@ -18,33 +18,6 @@ end
 --local function debug() end
 local debug = print
 
-
-local function deduceSignalValue(entity,signal,condNum)
-  local t=2^31
-  local v=0
-  condNum=condNum or 1
-  local condition=entity.get_circuit_condition(condNum)
-
-  condition.condition.first_signal=signal
-  condition.condition.comparator="<"
-  while t~=1 do
-    condition.condition.constant=v
-    entity.set_circuit_condition(condNum,condition)
-    t=t/2
-    if entity.get_circuit_condition(condNum).fulfilled==true then
-      v=v-t
-    else
-      v=v+t
-    end
-  end
-  condition.condition.constant=v
-  entity.set_circuit_condition(condNum,condition)
-  if entity.get_circuit_condition(condNum).fulfilled then
-    v=v-1
-  end
-  return v
-end
-
 local function onLoad()
   if global.logistic_combinators==nil or global.logistic_combinators.version ~= mod_version then
     --unlock if needed
@@ -73,14 +46,15 @@ end
 
 local function onTick(event)
   if event.tick%polling_cycles == polling_cycles-1 then
-    for i=1,#lcombs do
+    local toRemove = {}
+    for i,lc in pairs(lcombs) do
       local lc=lcombs[i]
-      if lc.comb.valid and lc.inserter.valid then
+      if lc.comb.valid then
+        local logisticsNetwork = lc.comb.surface.find_logistic_network_by_position(lc.comb.position, lc.comb.force.name)
         local params=lc.comb.get_circuit_condition(1).parameters
         for i=1,15 do
           if params[i].signal.name and params[i].signal.type=="item" then
-            --it's set to something, so deduce it
-            local c=deduceSignalValue(lc.inserter,params[i].signal,2)
+            local c = logisticsNetwork and logisticsNetwork.get_item_count(params[i].signal.name) or 0
             if c~=params[i].count then
               params[i].count=c
             end
@@ -89,7 +63,12 @@ local function onTick(event)
           end
         end
         lc.comb.set_circuit_condition(1,{parameters=params})
+      else
+        table.insert(toRemove, i)
       end
+    end
+    for _, k in pairs(toRemove) do
+      table.remove(lcombs, k)
     end
   end
 
@@ -98,24 +77,24 @@ end
 local function onPlaceEntity(event)
   local entity=event.created_entity
   if entity.name=="logistic-combinator" then
-    local inserter=entity.surface.create_entity{
-        name="lcomb-hidden-inserter",
-        position=entity.position,
-        force=entity.force,
-      }
-    inserter.insert({name="coal",count=1})
-    lcombs[#lcombs+1]={comb=entity, inserter=inserter}
+    table.insert(lcombs,{comb=entity})
   end
-
 end
 
 local function onRemoveEntity(entity)
+  local r = false
   for k,v in pairs(lcombs) do
     if v.comb==entity then
-      v.inserter.clear_items_inside()
-      v.inserter.destroy()
+      if v.inserter and v.inserter.valid then
+        v.inserter.clear_items_inside()
+        v.inserter.destroy()
+      end
+      r = k
       break
     end
+  end
+  if r then
+    table.remove(lcombs, r)
   end
 end
 
