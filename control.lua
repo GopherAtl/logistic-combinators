@@ -19,7 +19,7 @@ end
 local debug = print
 
 local function onLoad()
-  if global.logistic_combinators==nil or global.logistic_combinators.version ~= mod_version then
+  if global.logistic_combinators==nil then
     --unlock if needed
     for _,force in pairs(game.forces) do
       force.reset_recipes()
