@@ -18,9 +18,10 @@ end
 --local function debug() end
 local debug = print
 
+
 local function onLoad()
-  if global.logistic_combinators==nil or global.logistic_combinators.version ~= mod_version then
-    --unlock if needed
+  if global.logistic_combinators==nil then
+    --unlock if needed; we're relying on a vanilla tech that may have already been researched.
     for _,force in pairs(game.forces) do
       force.reset_recipes()
       force.reset_technologies()
@@ -33,14 +34,12 @@ local function onLoad()
     end
 
     global.logistic_combinators={lcombs={},version=mod_version}
-
   end
 
   lcombs=global.logistic_combinators.lcombs
-end
 
-local function onSave()
-  global.logistic_combinators={lcombs=lcombs, version=mod_version}
+  -- on_save used to do this
+  global.logistic_combinators.version=mod_version
 end
 
 
@@ -81,7 +80,8 @@ local function onPlaceEntity(event)
   end
 end
 
-local function onRemoveEntity(entity)
+local function onRemoveEntity(event)
+  local entity = event.entity
   local r = false
   for k,v in pairs(lcombs) do
     if v.comb==entity then
@@ -98,16 +98,14 @@ local function onRemoveEntity(entity)
   end
 end
 
-game.on_init(onLoad)
-game.on_load(onLoad)
+script.on_init(onLoad)
+script.on_configuration_changed(onLoad)
 
-game.on_save(onSave)
+script.on_event(defines.events.on_built_entity, onPlaceEntity)
+script.on_event(defines.events.on_robot_built_entity, onPlaceEntity)
 
-game.on_event(defines.events.on_built_entity,onPlaceEntity)
-game.on_event(defines.events.on_robot_built_entity,onPlaceEntity)
+script.on_event(defines.events.on_preplayer_mined_item, onRemoveEntity)
+script.on_event(defines.events.on_robot_pre_mined, onRemoveEntity)
+script.on_event(defines.events.on_entity_died, onRemoveEntity)
 
-game.on_event(defines.events.on_preplayer_mined_item, function(event) onRemoveEntity(event.entity) end)
-game.on_event(defines.events.on_robot_pre_mined, function(event) onRemoveEntity(event.entity) end)
-game.on_event(defines.events.on_entity_died, function(event) onRemoveEntity(event.entity) end)
-
-game.on_event(defines.events.on_tick,onTick)
+script.on_event(defines.events.on_tick, onTick)
