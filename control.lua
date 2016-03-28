@@ -100,6 +100,7 @@ end
 
 script.on_init(onLoad)
 script.on_configuration_changed(onLoad)
+script.on_load(onLoad)
 
 script.on_event(defines.events.on_built_entity, onPlaceEntity)
 script.on_event(defines.events.on_robot_built_entity, onPlaceEntity)
