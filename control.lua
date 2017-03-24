@@ -1,6 +1,6 @@
 require "config"
 
-local mod_version="0.1.3"
+local mod_version="0.1.4"
 
 local lcombs={}
 

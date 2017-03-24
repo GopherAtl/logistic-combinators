@@ -1,10 +1,11 @@
 {
   "name": "logistic-combinators",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "title": "Logistic Combinators",
   "author": "GopherAtl",
   "homepage": "",
   "contact": "gopheratl@gmail.com",
   "description": "Adds special combinator that transfers values from logistic network to circuit networks.",
-  "dependencies": ["base >= 0.12.11"]
+  "dependencies": ["base >= 0.12.11"],
+  "factorio_version": "0.14"
 }
