@@ -1,5 +1,3 @@
-require 'defines'
-
 --times per second (max 60) that logistic combinators will poll the logistic network for values.
 --haven't doen any large-scale testing, but polling too frequently, when you have lots of these,
 --may cause performance issues in worlds. you can dial it to 60 (instant refresh) if you want, or
